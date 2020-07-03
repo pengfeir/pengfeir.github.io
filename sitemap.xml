@@ -2,16 +2,16 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
-    <loc>https://www.pengfei.run/promise/</loc>
+    <loc>https://www.pengfei.run/promise.html</loc>
     
-    <lastmod>2020-07-03T07:04:56.726Z</lastmod>
+    <lastmod>2020-07-03T09:35:17.898Z</lastmod>
     
   </url>
   
   <url>
-    <loc>https://www.pengfei.run/higherorder/</loc>
+    <loc>https://www.pengfei.run/higherorder.html</loc>
     
-    <lastmod>2020-07-03T07:02:19.868Z</lastmod>
+    <lastmod>2020-07-03T09:35:09.950Z</lastmod>
     
   </url>
   
@@ -30,14 +30,7 @@
   </url>
   
   <url>
-    <loc>https://www.pengfei.run/webpack/</loc>
-    
-    <lastmod>2020-07-01T01:56:09.549Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://www.pengfei.run/categories/index.html</loc>
+    <loc>https://www.pengfei.run/webpack.html</loc>
     
     <lastmod>2020-07-01T01:56:09.549Z</lastmod>
     
@@ -45,6 +38,13 @@
   
   <url>
     <loc>https://www.pengfei.run/about/index.html</loc>
+    
+    <lastmod>2020-07-01T01:56:09.549Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://www.pengfei.run/categories/index.html</loc>
     
     <lastmod>2020-07-01T01:56:09.549Z</lastmod>
     
