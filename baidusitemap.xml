@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>http://www.pengfei.run/promise/</loc>
+    <loc>https://www.pengfei.run/promise/</loc>
     <lastmod>2020-07-03</lastmod>
   </url>  <url>
-    <loc>http://www.pengfei.run/higherorder/</loc>
+    <loc>https://www.pengfei.run/higherorder/</loc>
     <lastmod>2020-07-03</lastmod>
   </url>  <url>
-    <loc>http://www.pengfei.run/webpack/</loc>
+    <loc>https://www.pengfei.run/webpack/</loc>
     <lastmod>2020-07-01</lastmod>
   </url>
 </urlset>
