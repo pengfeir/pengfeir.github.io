@@ -1,0 +1,656 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.2.1">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"www.pengfei.run","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="webpack基础">
+<meta property="og:type" content="article">
+<meta property="og:title" content="初识webpack">
+<meta property="og:url" content="http://www.pengfei.run/webpack/index.html">
+<meta property="og:site_name" content="砖瓦匠">
+<meta property="og:description" content="webpack基础">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://www.pengfei.run/images/webpack.jpg">
+<meta property="og:image" content="http://www.pengfei.run/images/status.jpg">
+<meta property="article:published_time" content="2020-06-26T02:24:38.000Z">
+<meta property="article:modified_time" content="2020-07-01T01:56:09.549Z">
+<meta property="article:author" content="渣渣飞">
+<meta property="article:tag" content="webpack">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://www.pengfei.run/images/webpack.jpg">
+
+<link rel="canonical" href="http://www.pengfei.run/webpack/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>初识webpack | 砖瓦匠</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  
+    <script type="text/javascript" src="//cdn.bootcss.com/canvas-nest.js/1.0.0/canvas-nest.min.js"></script>
+  
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">砖瓦匠</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://www.pengfei.run/webpack/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="渣渣飞">
+      <meta itemprop="description" content="代码搬运工">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="砖瓦匠">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          初识webpack
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2020-06-26 10:24:38" itemprop="dateCreated datePublished" datetime="2020-06-26T10:24:38+08:00">2020-06-26</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-07-01 09:56:09" itemprop="dateModified" datetime="2020-07-01T09:56:09+08:00">2020-07-01</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/webpack/" itemprop="url" rel="index"><span itemprop="name">webpack</span></a>
+                </span>
+            </span>
+
+          
+            <span id="/webpack/" class="post-meta-item leancloud_visitors" data-flag-title="初识webpack" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="leancloud-visitors-count"></span>
+            </span><br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>8.6k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>8 分钟</span>
+            </span>
+            <div class="post-description">webpack基础</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h3 id="基础"><a href="#基础" class="headerlink" title="基础"></a>基础</h3><h4 id="webpack-是什么"><a href="#webpack-是什么" class="headerlink" title="webpack 是什么"></a>webpack 是什么</h4><p>webpack 可以分析你的项目结构，找到 JavaScript 模块以及其它的一些浏览器不能直接运行的拓展语言（Scss，TypeScript 等），并将其打包为合适的格式以供浏览器使用</p>
+<h4 id="webpack-学习路线"><a href="#webpack-学习路线" class="headerlink" title="webpack 学习路线"></a>webpack 学习路线</h4><p><img src="/images/webpack.jpg" alt="alt webpack路线" title="图"></p>
+<h4 id="webpack-基础用法，概念"><a href="#webpack-基础用法，概念" class="headerlink" title="webpack 基础用法，概念"></a>webpack 基础用法，概念</h4><h5 id="entry"><a href="#entry" class="headerlink" title="entry"></a>entry</h5><p>entry 用来配置入口文件的地址，支持三种写法</p>
+<p>1.字符串</p>
+<figure class="highlight ada"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">entry</span>: path.resolve(__dirname, <span class="string">"src/index.js"</span>)</span><br></pre></td></tr></table></figure>
+
+<p>打包后生成 main.js<br>2.对象</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-tag">entry</span>: &#123;</span><br><span class="line">    <span class="attribute">main</span>: path.<span class="built_in">resolve</span>(__dirname, <span class="string">"src/index.js"</span>),</span><br><span class="line">    index: path.<span class="built_in">resolve</span>(__dirname, <span class="string">"src/main.js"</span>),</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure>
+
+<p>打包后生成 main.js，index.js</p>
+<p>3.数组</p>
+<figure class="highlight livecodeserver"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">entry: [</span><br><span class="line">    path.<span class="built_in">resolve</span>(__dirname, <span class="string">"src/index.js"</span>),</span><br><span class="line">    path.<span class="built_in">resolve</span>(__dirname, <span class="string">"src/main.js"</span>),</span><br><span class="line">  ]</span><br></pre></td></tr></table></figure>
+
+<p>打包后生成 main.js<br>如果key不指定名称默认 main.js，其中数组写法等价对象 key-value</p>
+<h5 id="output"><a href="#output" class="headerlink" title="output"></a>output</h5><p>output 用来配置出口文件的地址</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-tag">output</span>: &#123;</span><br><span class="line">    <span class="attribute">path</span>: path.<span class="built_in">resolve</span>(__dirname, <span class="string">"dist"</span>),</span><br><span class="line">    filename: <span class="string">"[name].[hash].js"</span>,</span><br><span class="line">  &#125;,</span><br></pre></td></tr></table></figure>
+
+<h5 id="mode"><a href="#mode" class="headerlink" title="mode"></a>mode</h5><p>mode 支持三种种模式：分别是 production，development，none</p>
+<ul>
+<li>mode为production时，会启用各种性能优化的功能，包括构建结果优化以及 webpack 运行性能优化</li>
+<li>mode为development时，则会开启 debug 工具，运行时打印详细的错误信息，以及更加快速的增量编译构建</li>
+</ul>
+<h5 id="status"><a href="#status" class="headerlink" title="status"></a>status</h5><p>status 用来控制命令行展示的信息<a href="https://webpack.docschina.org/configuration/stats/" target="_blank" rel="noopener">地址</a></p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">stats:</span> <span class="string">&#123;</span></span><br><span class="line">    <span class="attr">modules:</span> <span class="literal">false</span><span class="string">,</span></span><br><span class="line">    <span class="attr">children:</span> <span class="literal">false</span><span class="string">,</span></span><br><span class="line">    <span class="attr">chunks:</span> <span class="literal">false</span><span class="string">,</span></span><br><span class="line">    <span class="attr">chunkModules:</span> <span class="literal">false</span><span class="string">,</span></span><br><span class="line"><span class="string">&#125;</span></span><br></pre></td></tr></table></figure>
+<p>我配置的modules，children，chunks，chunkModules都不显示看起来信息没那么多<br>如图<img src="/images/status.jpg" alt="status"></p>
+<h5 id="optimization"><a href="#optimization" class="headerlink" title="optimization"></a>optimization</h5><h5 id="performance"><a href="#performance" class="headerlink" title="performance"></a>performance</h5><p>展示性能提示</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">performance:</span> <span class="string">&#123;</span></span><br><span class="line">    <span class="string">//</span> <span class="literal">false</span> <span class="string">|</span> <span class="string">"error"</span> <span class="string">|</span> <span class="string">"warning"</span></span><br><span class="line">    <span class="attr">hints:</span> <span class="string">"warning"</span><span class="string">,</span></span><br><span class="line">    <span class="string">//</span> <span class="string">根据入口起点的最大体积，控制webpack何时生成性能*提示,整数类型,以字节为单位</span></span><br><span class="line">    <span class="attr">maxEntrypointSize:</span> <span class="number">5000000</span><span class="string">,</span></span><br><span class="line">    <span class="string">//</span> <span class="string">最大5m</span></span><br><span class="line">    <span class="attr">maxAssetSize:</span> <span class="number">1024</span> <span class="string">*</span> <span class="number">1024</span> <span class="string">*</span> <span class="number">5</span><span class="string">,</span></span><br><span class="line"><span class="string">&#125;</span></span><br></pre></td></tr></table></figure>
+
+<h5 id="resolve解析"><a href="#resolve解析" class="headerlink" title="resolve解析"></a>resolve解析</h5><p>常用到的两个<br>1.extensions<br>指定extension之后可以不用在require或是import的时候加文件扩展名,会依次尝试添加扩展名进行匹配</p>
+<figure class="highlight avrasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="symbol">extensions:</span> [<span class="string">".js"</span>, <span class="string">"vue"</span>, <span class="string">".jsx"</span>, <span class="string">".json"</span>, <span class="string">".css"</span>]</span><br></pre></td></tr></table></figure>
+<p>2.alias<br>设置别名</p>
+<figure class="highlight ceylon"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">alias</span>: &#123;</span><br><span class="line">      <span class="string">"@"</span>: path.resolve(<span class="number">__</span>dirname, <span class="string">"../src"</span>), <span class="comment">// 这样配置后 @ 可以指向 src 目录</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h5 id="module"><a href="#module" class="headerlink" title="module"></a>module</h5><p>import，require，define ，css/sass/less 文件中的 @import==引过来的</p>
+<h5 id="文件指纹"><a href="#文件指纹" class="headerlink" title="文件指纹"></a>文件指纹</h5><h6 id="1-hash"><a href="#1-hash" class="headerlink" title="1.hash"></a>1.hash</h6><p>hash 是以项目为入口生成的，每次编译都会重新生成</p>
+<h6 id="2-chunckhash"><a href="#2-chunckhash" class="headerlink" title="2.chunckhash"></a>2.chunckhash</h6><p>chunckhash 根据不同的入口文件(Entry)进行依赖文件解析、构建对应的 chunk，生成对应的哈希值</p>
+<h6 id="3-contenthash"><a href="#3-contenthash" class="headerlink" title="3.contenthash"></a>3.contenthash</h6><p>contenthash 主要是为了应对 js 引入 css 文件，js 改变 css 的 hash 也跟着改变这种情况的，contenthash 可以在 js 中引入 css,只改变 js 的时候不改变 css 的 hash</p>
+<h5 id="sourcemap"><a href="#sourcemap" class="headerlink" title="sourcemap"></a>sourcemap</h5><p>sourcemap 是为了解决运行浏览器运行时帮助我们 debug 到原始开发代码<br><a href="https://www.webpackjs.com/configuration/devtool/#devtool" target="_blank" rel="noopener">devtool</a></p>
+<!-- ##### devServer -->
+<h5 id="plugin"><a href="#plugin" class="headerlink" title="plugin"></a>plugin</h5><ul>
+<li>常用 plugin<br>copy-webpack-plugin<br>clean-webpack-plugin<br>webpack-bundle-analyzer</li>
+</ul>
+<h5 id="loader"><a href="#loader" class="headerlink" title="loader"></a>loader</h5><h6 id="1-loader-是干什么的"><a href="#1-loader-是干什么的" class="headerlink" title="1.loader 是干什么的"></a>1.loader 是干什么的</h6><p>loader 是转换器，可以要把不同的文件都转成浏览器认识的 js,css==</p>
+<h6 id="2-loader-用法"><a href="#2-loader-用法" class="headerlink" title="2.loader 用法"></a>2.loader 用法</h6><ul>
+<li>loader</li>
+</ul>
+<figure class="highlight less"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">rules</span>: [</span><br><span class="line">            &#123;</span><br><span class="line">                <span class="attribute">test</span>: /\.css/,</span><br><span class="line">                <span class="attribute">loader</span>:[<span class="string">'style-loader'</span>,<span class="string">'css-loader'</span>]</span><br><span class="line">            &#125;</span><br><span class="line">        ]</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>use</li>
+</ul>
+<figure class="highlight less"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">rules</span>: [</span><br><span class="line">            &#123;</span><br><span class="line">                <span class="attribute">test</span>: /\.css/,</span><br><span class="line">                <span class="attribute">use</span>:[<span class="string">'style-loader'</span>,<span class="string">'css-loader'</span>]</span><br><span class="line">            &#125;</span><br><span class="line">        ]</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>use+loader</li>
+</ul>
+<figure class="highlight vim"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">rule<span class="variable">s:</span> [</span><br><span class="line">            &#123;</span><br><span class="line">                tes<span class="variable">t:</span> /\.css/,</span><br><span class="line">                include: path.<span class="built_in">resolve</span>(__dirname,<span class="string">'src'</span>),</span><br><span class="line">                use: [&#123;</span><br><span class="line">                    loader: <span class="string">'style-loader'</span>,</span><br><span class="line">                    option<span class="variable">s:</span> &#123;</span><br><span class="line">                        inser<span class="variable">t:</span><span class="string">'top'</span></span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;,<span class="string">'css-loader'</span>]</span><br><span class="line">            &#125;</span><br><span class="line">        ]</span><br></pre></td></tr></table></figure>
+
+<!-- #### webpack 优化 -->
+
+<h5 id="externals"><a href="#externals" class="headerlink" title="externals"></a>externals</h5><p>打包成 umd，结构目录</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line">! <span class="function"><span class="keyword">function</span> (<span class="params">e, o</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (<span class="string">"object"</span> == <span class="keyword">typeof</span> exports &amp;&amp; <span class="string">"object"</span> == <span class="keyword">typeof</span> <span class="built_in">module</span>) <span class="built_in">module</span>.exports = o(<span class="built_in">require</span>(<span class="string">"jQuery"</span>));</span><br><span class="line">    <span class="keyword">else</span> <span class="keyword">if</span> (<span class="string">"function"</span> == <span class="keyword">typeof</span> define &amp;&amp; define.amd) define([<span class="string">"jQuery"</span>], o);</span><br><span class="line">    <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="keyword">var</span> n = <span class="string">"object"</span> == <span class="keyword">typeof</span> exports ? o(<span class="built_in">require</span>(<span class="string">"jQuery"</span>)) : o(e.jQuery);</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">var</span> t <span class="keyword">in</span> n)(<span class="string">"object"</span> == <span class="keyword">typeof</span> exports ? exports : e)[t] = n[t]</span><br><span class="line">    &#125;</span><br><span class="line">&#125;(<span class="built_in">window</span>, (<span class="function"><span class="keyword">function</span> (<span class="params">e</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> (<span class="built_in">window</span>.webpackJsonp = <span class="built_in">window</span>.webpackJsonp || []).push([[<span class="number">0</span>], [<span class="function"><span class="keyword">function</span> (<span class="params">o, n</span>) </span>&#123;</span><br><span class="line">        o.exports = e</span><br><span class="line">    &#125;, <span class="function"><span class="keyword">function</span> (<span class="params">e, o, n</span>) </span>&#123;&#125;, <span class="function"><span class="keyword">function</span> (<span class="params">e, o, n</span>) </span>&#123;</span><br><span class="line"><span class="meta">        "use strict"</span>;</span><br><span class="line">        n.r(o), o.default =</span><br><span class="line">            <span class="string">"data:image/png;base64,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"</span></span><br><span class="line">    &#125;, , , , <span class="function"><span class="keyword">function</span> (<span class="params">e, o, n</span>) </span>&#123;</span><br><span class="line"><span class="meta">        "use strict"</span>;</span><br><span class="line">        n.r(o);</span><br><span class="line">        n(<span class="number">0</span>), n(<span class="number">1</span>);</span><br><span class="line">        <span class="keyword">var</span> t = <span class="function"><span class="keyword">function</span> (<span class="params">e, o</span>) </span>&#123;</span><br><span class="line">            <span class="keyword">return</span> e + o</span><br><span class="line">        &#125;;</span><br><span class="line">        t(<span class="number">1</span>, <span class="number">22</span>), n(<span class="number">3</span>).defaults(&#123;</span><br><span class="line">            a: <span class="number">1</span></span><br><span class="line">        &#125;, &#123;</span><br><span class="line">            a: <span class="number">3</span>,</span><br><span class="line">            b: <span class="number">2</span></span><br><span class="line">        &#125;), t(<span class="number">1</span>, <span class="number">2</span>);</span><br><span class="line">        <span class="keyword">var</span> A = <span class="built_in">document</span>.getElementById(<span class="string">"app"</span>),</span><br><span class="line">            a = <span class="built_in">document</span>.createElement(<span class="string">"div"</span>),</span><br><span class="line">            s = <span class="built_in">document</span>.createDocumentFragment(),</span><br><span class="line">            u = <span class="keyword">new</span> Image;</span><br><span class="line">        u.className = <span class="string">"pidan"</span>, u.src = n(<span class="number">2</span>).default, a.className = <span class="string">"dog"</span>, s.appendChild(a), s.appendChild(</span><br><span class="line">            u), A.appendChild(s)</span><br><span class="line">    &#125;], [[<span class="number">6</span>, <span class="number">1</span>, <span class="number">2</span>]]])</span><br><span class="line">&#125;));</span><br></pre></td></tr></table></figure>
+<p>其中</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (<span class="string">"object"</span> == <span class="keyword">typeof</span> exports &amp;&amp; <span class="string">"object"</span> == <span class="keyword">typeof</span> <span class="built_in">module</span>) <span class="built_in">module</span>.exports = o(<span class="built_in">require</span>(<span class="string">"jQuery"</span>));</span><br><span class="line">    <span class="keyword">else</span> <span class="keyword">if</span> (<span class="string">"function"</span> == <span class="keyword">typeof</span> define &amp;&amp; define.amd) define([<span class="string">"jQuery"</span>], o);</span><br><span class="line">    <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="keyword">var</span> n = <span class="string">"object"</span> == <span class="keyword">typeof</span> exports ? o(<span class="built_in">require</span>(<span class="string">"jQuery"</span>)) : o(e.jQuery);</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">var</span> t <span class="keyword">in</span> n)(<span class="string">"object"</span> == <span class="keyword">typeof</span> exports ? exports : e)[t] = n[t]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>主要用来区分运行时用的哪种规范</p>
+<h4 id="webpack-打包后简化后结果"><a href="#webpack-打包后简化后结果" class="headerlink" title="webpack 打包后简化后结果"></a>webpack 打包后简化后结果</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br></pre></td><td class="code"><pre><span class="line">(<span class="function"><span class="keyword">function</span> (<span class="params">modules</span>) </span>&#123;</span><br><span class="line">  <span class="comment">// webpackBootstrap</span></span><br><span class="line">  <span class="keyword">var</span> installedModules = &#123;&#125;;</span><br><span class="line">  <span class="comment">// The require function</span></span><br><span class="line">  <span class="function"><span class="keyword">function</span> <span class="title">__webpack_require__</span>(<span class="params">moduleId</span>) </span>&#123;</span><br><span class="line">    <span class="comment">// Check if module is in cache</span></span><br><span class="line">    <span class="keyword">if</span> (installedModules[moduleId]) &#123;</span><br><span class="line">      <span class="keyword">return</span> installedModules[moduleId].exports;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// Create a new module (and put it into the cache)</span></span><br><span class="line">    <span class="keyword">var</span> <span class="built_in">module</span> = (installedModules[moduleId] = &#123;</span><br><span class="line">      i: moduleId,</span><br><span class="line">      l: <span class="literal">false</span>,</span><br><span class="line">      exports: &#123;&#125;,</span><br><span class="line">    &#125;);</span><br><span class="line">    <span class="comment">// Execute the module function</span></span><br><span class="line">    modules[moduleId].call(</span><br><span class="line">      <span class="built_in">module</span>.exports,</span><br><span class="line">      <span class="built_in">module</span>,</span><br><span class="line">      <span class="built_in">module</span>.exports,</span><br><span class="line">      __webpack_require__</span><br><span class="line">    );</span><br><span class="line">    <span class="comment">// Flag the module as loaded</span></span><br><span class="line">    <span class="built_in">module</span>.l = <span class="literal">true</span>;</span><br><span class="line">    <span class="comment">// Return the exports of the module</span></span><br><span class="line">    <span class="keyword">return</span> <span class="built_in">module</span>.exports;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;)(&#123;</span><br><span class="line">  <span class="string">"./src/js/a.js"</span>: <span class="function"><span class="keyword">function</span> (<span class="params">module, exports</span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">"a"</span>);</span><br><span class="line">  &#125;,</span><br><span class="line"></span><br><span class="line">  <span class="string">"./src/js/b.js"</span>: <span class="function"><span class="keyword">function</span> (<span class="params">module, exports</span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">"b"</span>);</span><br><span class="line">  &#125;,</span><br><span class="line"></span><br><span class="line">  <span class="string">"./src/main.js"</span>: <span class="function"><span class="keyword">function</span> (<span class="params">module, __webpack_exports__, __webpack_require__</span>) </span>&#123;</span><br><span class="line">    __webpack_require__.r(__webpack_exports__);</span><br><span class="line">    <span class="keyword">var</span> _js_a__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(</span><br><span class="line">      <span class="string">"./src/js/a.js"</span></span><br><span class="line">    );</span><br><span class="line">    <span class="keyword">var</span> _js_b__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(</span><br><span class="line">      <span class="string">"./src/js/b.js"</span></span><br><span class="line">    );</span><br><span class="line">  &#125;,</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<p>附一份自己的webpack配置<br><a href="https://github.com/pengfeir/webpack" target="_blank" rel="noopener">传送门</a></p>
+
+    </div>
+
+    
+    
+    
+      
+
+        <div class="reward-container">
+  <div>您的支持将鼓励我继续创作!</div>
+  <button onclick="var qr = document.getElementById('qr'); qr.style.display = (qr.style.display === 'none') ? 'block' : 'none';">
+    打赏
+  </button>
+  <div id="qr" style="display: none;">
+      
+      <div style="display: inline-block;">
+        <img src="/images/wechatpay.jpg" alt="渣渣飞 微信支付">
+        <p>微信支付</p>
+      </div>
+      
+      <div style="display: inline-block;">
+        <img src="/images/alipay.jpg" alt="渣渣飞 支付宝">
+        <p>支付宝</p>
+      </div>
+
+  </div>
+</div>
+
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/webpack/" rel="tag"><i class="fa fa-tag"></i></a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item"></div>
+      <div class="post-nav-item">
+    <a href="/higherorder/" rel="next" title="聊聊js中的高阶函数">
+      聊聊js中的高阶函数 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#基础"><span class="nav-number">1.</span> <span class="nav-text">基础</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#webpack-是什么"><span class="nav-number">1.1.</span> <span class="nav-text">webpack 是什么</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#webpack-学习路线"><span class="nav-number">1.2.</span> <span class="nav-text">webpack 学习路线</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#webpack-基础用法，概念"><span class="nav-number">1.3.</span> <span class="nav-text">webpack 基础用法，概念</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#entry"><span class="nav-number">1.3.1.</span> <span class="nav-text">entry</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#output"><span class="nav-number">1.3.2.</span> <span class="nav-text">output</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#mode"><span class="nav-number">1.3.3.</span> <span class="nav-text">mode</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#status"><span class="nav-number">1.3.4.</span> <span class="nav-text">status</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#optimization"><span class="nav-number">1.3.5.</span> <span class="nav-text">optimization</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#performance"><span class="nav-number">1.3.6.</span> <span class="nav-text">performance</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#resolve解析"><span class="nav-number">1.3.7.</span> <span class="nav-text">resolve解析</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#module"><span class="nav-number">1.3.8.</span> <span class="nav-text">module</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#文件指纹"><span class="nav-number">1.3.9.</span> <span class="nav-text">文件指纹</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#1-hash"><span class="nav-number">1.3.9.1.</span> <span class="nav-text">1.hash</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#2-chunckhash"><span class="nav-number">1.3.9.2.</span> <span class="nav-text">2.chunckhash</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#3-contenthash"><span class="nav-number">1.3.9.3.</span> <span class="nav-text">3.contenthash</span></a></li></ol></li><li class="nav-item nav-level-5"><a class="nav-link" href="#sourcemap"><span class="nav-number">1.3.10.</span> <span class="nav-text">sourcemap</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#plugin"><span class="nav-number">1.3.11.</span> <span class="nav-text">plugin</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#loader"><span class="nav-number">1.3.12.</span> <span class="nav-text">loader</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#1-loader-是干什么的"><span class="nav-number">1.3.12.1.</span> <span class="nav-text">1.loader 是干什么的</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#2-loader-用法"><span class="nav-number">1.3.12.2.</span> <span class="nav-text">2.loader 用法</span></a></li></ol></li><li class="nav-item nav-level-5"><a class="nav-link" href="#externals"><span class="nav-number">1.3.13.</span> <span class="nav-text">externals</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#webpack-打包后简化后结果"><span class="nav-number">1.4.</span> <span class="nav-text">webpack 打包后简化后结果</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="渣渣飞"
+      src="/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">渣渣飞</p>
+  <div class="site-description" itemprop="description">代码搬运工</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">3</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">3</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">3</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/pengfeir" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;pengfeir" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:renpengfei6372@163.com" title="E-Mail → mailto:renpengfei6372@163.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+<script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">渣渣飞</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-area"></i>
+    </span>
+      <span class="post-meta-item-text">站点总字数：</span>
+    <span title="站点总字数">20k</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+      <span class="post-meta-item-text">站点阅读时长 &asymp;</span>
+    <span title="站点阅读时长">18 分钟</span>
+</div>
+  <div class="powered-by">
+   <i class="fa fa-user-md"></i>
+	<span id="busuanzi_container_site_uv">
+		本站访客数:<span id="busuanzi_value_site_uv"></span>
+	</span>
+	<span class="post-meta-divider">|</span>
+	<span id="busuanzi_container_site_pv">
+		本站访问量<span id="busuanzi_value_site_pv"></span>
+	</span>
+  </div>
+
+        
+
+
+
+
+
+
+<script>
+  (function() {
+    function leancloudSelector(url) {
+      url = encodeURI(url);
+      return document.getElementById(url).querySelector('.leancloud-visitors-count');
+    }
+
+    function addCount(Counter) {
+      var visitors = document.querySelector('.leancloud_visitors');
+      var url = decodeURI(visitors.id);
+      var title = visitors.dataset.flagTitle;
+
+      Counter('get', '/classes/Counter?where=' + encodeURIComponent(JSON.stringify({ url })))
+        .then(response => response.json())
+        .then(({ results }) => {
+          if (results.length > 0) {
+            var counter = results[0];
+            leancloudSelector(url).innerText = counter.time + 1;
+            Counter('put', '/classes/Counter/' + counter.objectId, { time: { '__op': 'Increment', 'amount': 1 } })
+              .catch(error => {
+                console.error('Failed to save visitor count', error);
+              });
+          } else {
+              Counter('post', '/classes/Counter', { title, url, time: 1 })
+                .then(response => response.json())
+                .then(() => {
+                  leancloudSelector(url).innerText = 1;
+                })
+                .catch(error => {
+                  console.error('Failed to create', error);
+                });
+          }
+        })
+        .catch(error => {
+          console.error('LeanCloud Counter Error', error);
+        });
+    }
+
+    function showTime(Counter) {
+      var visitors = document.querySelectorAll('.leancloud_visitors');
+      var entries = [...visitors].map(element => {
+        return decodeURI(element.id);
+      });
+
+      Counter('get', '/classes/Counter?where=' + encodeURIComponent(JSON.stringify({ url: { '$in': entries } })))
+        .then(response => response.json())
+        .then(({ results }) => {
+          for (let url of entries) {
+            let target = results.find(item => item.url === url);
+            leancloudSelector(url).innerText = target ? target.time : 0;
+          }
+        })
+        .catch(error => {
+          console.error('LeanCloud Counter Error', error);
+        });
+    }
+
+    let { app_id, app_key, server_url } = {"enable":true,"app_id":"T5Ic0ffTDnmsm3g5je48MiIw-gzGzoHsz","app_key":"clVSDhG8s02epp1APBKXRxY0","server_url":null,"security":false};
+    function fetchData(api_server) {
+      var Counter = (method, url, data) => {
+        return fetch(`${api_server}/1.1${url}`, {
+          method,
+          headers: {
+            'X-LC-Id'     : app_id,
+            'X-LC-Key'    : app_key,
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(data)
+        });
+      };
+      if (CONFIG.page.isPost) {
+        if (CONFIG.hostname !== location.hostname) return;
+        addCount(Counter);
+      } else if (document.querySelectorAll('.post-title-link').length >= 1) {
+        showTime(Counter);
+      }
+    }
+
+    let api_server = app_id.slice(-9) !== '-MdYXbMMI' ? server_url : `https://${app_id.slice(0, 8).toLowerCase()}.api.lncldglobal.com`;
+
+    if (api_server) {
+      fetchData(api_server);
+    } else {
+      fetch('https://app-router.leancloud.cn/2/route?appId=' + app_id)
+        .then(response => response.json())
+        .then(({ api_server }) => {
+          fetchData('https://' + api_server);
+        });
+    }
+  })();
+</script>
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>
