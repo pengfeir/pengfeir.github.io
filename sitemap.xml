@@ -2,9 +2,16 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://www.pengfei.run/postcss.html</loc>
+    
+    <lastmod>2020-09-07T06:05:54.198Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>https://www.pengfei.run/husky.html</loc>
     
-    <lastmod>2020-09-03T08:19:16.047Z</lastmod>
+    <lastmod>2020-09-07T03:34:25.966Z</lastmod>
     
   </url>
   
@@ -51,14 +58,14 @@
   </url>
   
   <url>
-    <loc>https://www.pengfei.run/categories/index.html</loc>
+    <loc>https://www.pengfei.run/about/index.html</loc>
     
     <lastmod>2020-07-01T01:56:09.549Z</lastmod>
     
   </url>
   
   <url>
-    <loc>https://www.pengfei.run/about/index.html</loc>
+    <loc>https://www.pengfei.run/categories/index.html</loc>
     
     <lastmod>2020-07-01T01:56:09.549Z</lastmod>
     
